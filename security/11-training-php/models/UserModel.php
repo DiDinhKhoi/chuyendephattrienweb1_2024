@@ -43,35 +43,66 @@ class UserModel extends BaseModel {
 
     }
 
-    /**
-     * Update user
-     * @param $input
-     * @return mixed
-     */
-    public function updateUser($input) {
-        $sql = 'UPDATE users SET 
-                 name = "' . mysqli_real_escape_string(self::$_connection, $input['name']) .'", 
-                 password="'. md5($input['password']) .'"
-                WHERE id = ' . $input['id'];
-
-        $user = $this->update($sql);
-
-        return $user;
+  /**
+ * Cập nhật người dùng
+ * @param array $input
+ * @return mixed
+ * @throws Exception
+ */
+public function updateUser($input) {
+    // Kiểm tra dữ liệu đầu vào
+    if (empty($input['name']) || !preg_match('/^[A-Za-z0-9]{5,15}$/', $input['name'])) {
+        throw new Exception("Tên không hợp lệ. Nó phải từ 5 đến 15 ký tự và chỉ chứa chữ cái A-Z, a-z, và số 0-9.");
+    }  
+    if (empty($input['password']) || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~!@#$%^&*()]).{5,10}$/', $input['password'])) {
+        throw new Exception("Mật khẩu không hợp lệ. Nó phải từ 5 đến 10 ký tự và bao gồm chữ thường, chữ HOA, số và ký tự đặc biệt.");
     }
 
-    /**
-     * Insert user
-     * @param $input
-     * @return mixed
-     */
-    public function insertUser($input) {
-        $sql = "INSERT INTO `app_web1`.`users` (`name`, `password`) VALUES (" .
-                "'" . $input['name'] . "', '".md5($input['password'])."')";
+    // Sử dụng prepared statements
+    $name = mysqli_real_escape_string(self::$_connection, $input['name']);
+    $password = password_hash($input['password'], PASSWORD_DEFAULT); // Băm mật khẩu
+    $id = intval($input['id']);
+    
+    $sql = 'UPDATE users SET 
+             name = ?, 
+             password = ? 
+            WHERE id = ?';
 
-        $user = $this->insert($sql);
+    // Chuẩn bị câu lệnh
+    $stmt = self::$_connection->prepare($sql);
+    $stmt->bind_param('ssi', $name, $password, $id);
+    $stmt->execute();
+   
 
-        return $user;
+    return $stmt->affected_rows; // Trả về số dòng bị ảnh hưởng
+}
+
+/**
+ * Thêm người dùng
+ * @param array $input
+ * @return mixed
+ * @throws Exception
+ */
+public function insertUser($input) {
+    if (empty($input['name']) || !preg_match('/^[A-Za-z0-9]{5,15}$/', $input['name'])) {
+        throw new Exception("Tên không hợp lệ. Nó phải từ 5 đến 15 ký tự và chỉ chứa chữ cái A-Z, a-z, và số 0-9.");
     }
+    if (empty($input['password']) || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~!@#$%^&*()]).{5,10}$/', $input['password'])) {
+        throw new Exception("Mật khẩu không hợp lệ. Nó phải từ 5 đến 10 ký tự và bao gồm chữ thường, chữ HOA, số và ký tự đặc biệt.");
+    }
+    $name = mysqli_real_escape_string(self::$_connection, $input['name']);
+    $password = password_hash($input['password'], PASSWORD_DEFAULT); // Băm mật khẩu
+
+    $sql = "INSERT INTO `app_web1`.`users` (`name`, `password`) VALUES (?, ?)";
+    $stmt = self::$_connection->prepare($sql);
+    $stmt->bind_param('ss', $name, $password);
+    $stmt->execute();
+    
+
+    return $stmt->insert_id;
+}
+
+
 
     /**
      * Search users
