@@ -1,0 +1,58 @@
+.list-title {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.list-title1 {
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-left: 30px;
+}
+.website-title {
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #555;
+  margin-top: 100px;
+}
+.list-style-left {
+  font-weight: bold;
+  font-size: 28px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+.icon-list {
+  padding-left: 0;
+}
+.icon-list li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.icon-list li i {
+  margin-right: 10px;
+  color: #000;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.square-list {
+  list-style: square;
+}
+.square-list li {
+  margin-bottom: 10px;
+}
+.circle-list {
+  list-style: none;
+}
+.circle-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.circle-list li::before {
+  content: '•';
+  color: #000;
+  font-size: 20px;
+  margin-right: 10px;
+  display: inline-block;
+  line-height: 1;
+}

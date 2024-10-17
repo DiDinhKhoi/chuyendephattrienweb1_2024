@@ -1,0 +1,80 @@
+
+
+@fa-font-family: 'Font Awesome 5 Free';
+@fa-icon-weight: 900;
+@item-margin-bottom: 10px;
+@icon-color: #000;
+
+.list-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+    
+}
+.list-title1{
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+
+.website-title {
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #555;
+    margin-top: 100px;
+}
+
+.list-style-left {
+    font-weight: bold;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 100px;
+}
+
+
+.icon-list {
+    padding-left: 0;
+    
+    li {
+        list-style: none;
+        margin-bottom: @item-margin-bottom;
+
+        
+        i {
+            margin-right: 10px;
+            color: @icon-color;
+            font-family: @fa-font-family;
+            font-weight: @fa-icon-weight;
+        }
+    }
+}
+
+.square-list {
+    list-style: square;
+    
+    li {
+        margin-bottom: @item-margin-bottom;
+    }
+}
+
+
+.circle-list {
+    list-style: none; 
+}
+
+.circle-list li {
+    margin-bottom: @item-margin-bottom;
+    display: flex; 
+    align-items: center; 
+}
+
+.circle-list li::before {
+    content: '•';  
+    color: @icon-color; 
+    font-size: 20px; 
+    margin-right: 10px; 
+    display: inline-block;
+    line-height: 1;
+}
+
