@@ -2,7 +2,7 @@
     <div class="row footer-container">
       
         <div class="col-md-3 footer-section">
-            <img src="footer-logo.png" alt="">
+            <img src="footer-logo1.png" alt="">
             <p>We strive to help people by providing extraordinary service and expert repairs using only the highest quality
                 parts available.</p>
             <p>We service all the newest and <span>popular mobile phones, tablets and laptops.</span>natis sed id nisl magna
